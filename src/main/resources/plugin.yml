@@ -1,0 +1,123 @@
+name: BetterEconomy
+version: ${project.version}
+description: A comprehensive economy plugin for Purpur servers with Vault support
+author: BetterTeam
+main: tw.betterteam.economy.BetterEconomy
+
+# Minecraft version compatibility
+api-version: "26.1"
+
+# Supported Purpur versions: 26.1.2+
+supported-minecraft-versions:
+  - "26.1.2"
+
+# Soft dependencies
+softdepend:
+  - Vault
+  - PlaceholderAPI
+
+# Commands
+commands:
+  economy:
+    description: Main economy admin command
+    usage: "/economy <give|take|set|wipe|confirm|history|reload> [args]"
+    aliases:
+      - eco
+    permission: economy.admin.give
+
+  balance:
+    description: Check player balance
+    usage: "/balance [player]"
+    aliases:
+      - bal
+      - money
+    permission: economy.balance.self
+
+  baltop:
+    description: View balance top list
+    usage: "/baltop [page]"
+    aliases:
+      - balancetop
+      - moneytop
+    permission: economy.baltop
+
+  pay:
+    description: Transfer money to another player
+    usage: "/pay <player> <amount>"
+    permission: economy.pay
+
+# Permissions
+permissions:
+  economy.*:
+    description: All economy permissions
+    children:
+      economy.admin.*: true
+      economy.balance.*: true
+      economy.baltop: true
+      economy.pay: true
+
+  economy.admin.*:
+    description: All admin permissions
+    default: op
+    children:
+      economy.admin.give: true
+      economy.admin.take: true
+      economy.admin.set: true
+      economy.admin.wipe: true
+      economy.admin.history: true
+      economy.admin.reload: true
+
+  economy.admin.give:
+    description: Allow giving money to players
+    default: op
+
+  economy.admin.take:
+    description: Allow taking money from players
+    default: op
+
+  economy.admin.set:
+    description: Allow setting player balance
+    default: op
+
+  economy.admin.wipe:
+    description: Allow wiping server economy
+    default: op
+
+  economy.admin.history:
+    description: Allow viewing transaction history
+    default: op
+
+  economy.admin.reload:
+    description: Allow reloading plugin configuration
+    default: op
+
+  economy.balance.*:
+    description: All balance permissions
+    default: true
+    children:
+      economy.balance.self: true
+      economy.balance.others: true
+
+  economy.balance.self:
+    description: Allow checking own balance
+    default: true
+
+  economy.balance.others:
+    description: Allow checking other player's balance
+    default: op
+
+  economy.baltop:
+    description: Allow viewing balance top list
+    default: true
+
+  economy.pay:
+    description: Allow transferring money to other players
+    default: true
+
+  economy.pay.bypass.limit:
+    description: Bypass minimum pay amount limit
+    default: op
+
+  economy.exempt.cap:
+    description: Player balance not limited by balance cap
+    default: op
